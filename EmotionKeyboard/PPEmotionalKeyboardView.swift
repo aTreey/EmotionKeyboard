@@ -26,9 +26,11 @@ class PPEmotionalKeyboardView: UIView {
         if #available(iOS 9.0, *) {
             addSubview(bottomToobar)
             bottomToobar.frame = CGRect(x: 0, y: kPPEmotionalKeyboardView_Height - kPPEmotionalKeyboardView_BottomToobar_Height - 34, width: Int(kScreen_Width), height: kPPEmotionalKeyboardView_BottomToobar_Height)
+            bottomToobar.delegate = self
         } else {
             // Fallback on earlier versions
         }
+        
         
         addSubview(collectionView)
         collectionView.register(PPEmotionalCell.self, forCellWithReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell)
@@ -56,6 +58,27 @@ class PPEmotionalKeyboardView: UIView {
 
 }
 
+//MARK: toobarDelegate
+extension PPEmotionalKeyboardView : PPEmotionalToolbarDelegate {
+    func toolbar(_ toobar: PPEmotionalToolbar, didSelectButtonAt index: Int) {
+        print("index = \(index)")
+        let indexPath = IndexPath(item: 0, section: index)
+
+        // 水平方向滚动时
+//         top
+//         centeredVertically
+//         bottom
+        
+        // 垂直方向滚动时
+//      left
+//      centeredHorizontally
+//      right:
+        
+        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
+    }
+}
+
+//MARK: collectionViewDelegate, DataSource
 extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

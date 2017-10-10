@@ -8,11 +8,16 @@
 
 import UIKit
 
+
+protocol PPEmotionalToolbarDelegate : NSObjectProtocol {
+    func toolbar(_ toobar: PPEmotionalToolbar, didSelectButtonAt index: Int)
+}
+
 @available(iOS 9.0, *)
 class PPEmotionalToolbar: UIStackView {
-    
+    var buttons = [UIButton]()
     var selectedButton: UIButton?
-    
+    weak open var delegate: PPEmotionalToolbarDelegate?
     override init(frame: CGRect) {
         super.init(frame: frame)
         axis = UILayoutConstraintAxis.horizontal
@@ -31,10 +36,12 @@ class PPEmotionalToolbar: UIStackView {
     }
     
     
-    @objc private func buttonAction(button: UIButton) {
+    @objc private func buttonDidselect(button: UIButton) {
         selectedButton?.isSelected = false
         selectedButton = button
         button.isSelected = true
+        let index = buttons.index(of: button)
+        delegate?.toolbar(self, didSelectButtonAt: index!)
     }
     
     private func addEmotional() {
@@ -49,11 +56,12 @@ class PPEmotionalToolbar: UIStackView {
             button.setTitleColor(UIColor.blue, for: .selected)
             button.setBackgroundImage(UIImage(named: "imageName"), for: .normal)
             button.backgroundColor = UIColor.lightGray
-            button.addTarget(self, action: #selector(PPEmotionalToolbar.buttonAction(button:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(PPEmotionalToolbar.buttonDidselect(button:)), for: .touchUpInside)
             button.isSelected = index == 0
             if 0 == index {
                 selectedButton = button
             }
+            buttons.append(button)
             addArrangedSubview(button)
         }
         
