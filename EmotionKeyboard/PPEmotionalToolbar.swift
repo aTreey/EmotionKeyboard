@@ -13,6 +13,7 @@ protocol PPEmotionalToolbarDelegate : NSObjectProtocol {
     func toolbar(_ toobar: PPEmotionalToolbar, didSelectButtonAt index: Int)
 }
 
+
 @available(iOS 9.0, *)
 class PPEmotionalToolbar: UIStackView {
     var buttons = [UIButton]()
@@ -35,6 +36,13 @@ class PPEmotionalToolbar: UIStackView {
         addEmotional()
     }
     
+    
+    public func setSelected(index: Int) {
+        selectedButton?.isSelected = false
+        let button = buttons[index]
+        selectedButton = button
+        button.isSelected = true
+    }
     
     @objc private func buttonDidselect(button: UIButton) {
         selectedButton?.isSelected = false

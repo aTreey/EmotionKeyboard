@@ -94,4 +94,21 @@ extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionView
         cell.backgroundColor = UIColor.randomColor
         return cell
     }
+    
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let index = collectionView.indexPathsForVisibleItems.first!
+//        print("index = \(index)")
+        bottomToobar.setSelected(index: index.section)
+    }
+    
+    
+    
+    /**
+     动画结束时调用，必须是非人为拖拽的动画是
+     */
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let index = collectionView.indexPathsForVisibleItems
+        print("scrollViewDidEndScrollingAnimation---indexs = \(index)")
+    }
 }
