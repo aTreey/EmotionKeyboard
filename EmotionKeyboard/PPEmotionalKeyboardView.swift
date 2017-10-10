@@ -31,7 +31,7 @@ class PPEmotionalKeyboardView: UIView {
         }
         
         addSubview(collectionView)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell)
+        collectionView.register(PPEmotionalCell.self, forCellWithReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell)
     }
     
     
@@ -42,7 +42,7 @@ class PPEmotionalKeyboardView: UIView {
         layout.scrollDirection = UICollectionViewScrollDirection.horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: kScreen_Width, height: rect.height)
         let collectionView = UICollectionView(frame: rect, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.yellow
@@ -59,15 +59,15 @@ class PPEmotionalKeyboardView: UIView {
 extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 3
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell, for: indexPath)
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell, for: indexPath) as! PPEmotionalCell
+        cell.indexPath = indexPath
         cell.backgroundColor = UIColor.randomColor
         return cell
     }

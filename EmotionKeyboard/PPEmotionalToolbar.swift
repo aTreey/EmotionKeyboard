@@ -48,10 +48,9 @@ class PPEmotionalToolbar: UIStackView {
             button.setTitleColor(UIColor.lightText, for: .normal)
             button.setTitleColor(UIColor.blue, for: .selected)
             button.setBackgroundImage(UIImage(named: "imageName"), for: .normal)
-            button.backgroundColor = UIColor.magenta
+            button.backgroundColor = UIColor.lightGray
             button.addTarget(self, action: #selector(PPEmotionalToolbar.buttonAction(button:)), for: .touchUpInside)
             button.isSelected = index == 0
-            
             if 0 == index {
                 selectedButton = button
             }

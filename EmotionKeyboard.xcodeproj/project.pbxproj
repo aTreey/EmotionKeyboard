@@ -18,6 +18,7 @@
 		17FCCCE81F7D27AD0044FBC5 /* EmotionKeyboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FCCCE71F7D27AD0044FBC5 /* EmotionKeyboardTests.swift */; };
 		17FCCCF31F7D27AD0044FBC5 /* EmotionKeyboardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FCCCF21F7D27AD0044FBC5 /* EmotionKeyboardUITests.swift */; };
 		7A3801491F8BDB25008A6EAF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A3801481F8BDB25008A6EAF /* UIColor+Extension.swift */; };
+		7A8A10481F8D17C9003041FB /* PPEmotionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A10471F8D17C9003041FB /* PPEmotionalCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		17FCCCF21F7D27AD0044FBC5 /* EmotionKeyboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionKeyboardUITests.swift; sourceTree = "<group>"; };
 		17FCCCF41F7D27AD0044FBC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A3801481F8BDB25008A6EAF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		7A8A10471F8D17C9003041FB /* PPEmotionalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPEmotionalCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				17FCCCD21F7D27AD0044FBC5 /* AppDelegate.swift */,
 				17FCCCD41F7D27AD0044FBC5 /* ViewController.swift */,
 				17E0D9F91F7E9E8000540527 /* PPEmotionalKeyboardView.swift */,
+				7A8A10471F8D17C9003041FB /* PPEmotionalCell.swift */,
 				17E0D9F51F7E837600540527 /* PPEmotionalToolbar.swift */,
 				17E0D9F71F7E9B1400540527 /* PPCommonTool.swift */,
 				7A3801481F8BDB25008A6EAF /* UIColor+Extension.swift */,
@@ -278,6 +281,7 @@
 				17FCCCD51F7D27AD0044FBC5 /* ViewController.swift in Sources */,
 				17E0D9FA1F7E9E8000540527 /* PPEmotionalKeyboardView.swift in Sources */,
 				17FCCCD31F7D27AD0044FBC5 /* AppDelegate.swift in Sources */,
+				7A8A10481F8D17C9003041FB /* PPEmotionalCell.swift in Sources */,
 				17E0D9F61F7E837600540527 /* PPEmotionalToolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
