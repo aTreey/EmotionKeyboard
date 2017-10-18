@@ -17,8 +17,12 @@
 		17FCCCDD1F7D27AD0044FBC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17FCCCDB1F7D27AD0044FBC5 /* LaunchScreen.storyboard */; };
 		17FCCCE81F7D27AD0044FBC5 /* EmotionKeyboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FCCCE71F7D27AD0044FBC5 /* EmotionKeyboardTests.swift */; };
 		17FCCCF31F7D27AD0044FBC5 /* EmotionKeyboardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FCCCF21F7D27AD0044FBC5 /* EmotionKeyboardUITests.swift */; };
+		7A1AE6001F978D61006931DB /* PPEmotionalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1AE5FF1F978D61006931DB /* PPEmotionalManager.swift */; };
+		7A20E22A1F97A17600164496 /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7A846FF71F8FAF4F0060BB4B /* Emoticons.bundle */; };
 		7A3801491F8BDB25008A6EAF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A3801481F8BDB25008A6EAF /* UIColor+Extension.swift */; };
 		7A8A10481F8D17C9003041FB /* PPEmotionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A10471F8D17C9003041FB /* PPEmotionalCell.swift */; };
+		7AEC96271F97AA7900E7C1ED /* PPEmotionalPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEC96261F97AA7900E7C1ED /* PPEmotionalPackage.swift */; };
+		7AEC96291F97B3CE00E7C1ED /* PPEmotionalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEC96281F97B3CE00E7C1ED /* PPEmotionalModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +59,12 @@
 		17FCCCEE1F7D27AD0044FBC5 /* EmotionKeyboardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmotionKeyboardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FCCCF21F7D27AD0044FBC5 /* EmotionKeyboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionKeyboardUITests.swift; sourceTree = "<group>"; };
 		17FCCCF41F7D27AD0044FBC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A1AE5FF1F978D61006931DB /* PPEmotionalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPEmotionalManager.swift; sourceTree = "<group>"; };
 		7A3801481F8BDB25008A6EAF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		7A846FF71F8FAF4F0060BB4B /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
 		7A8A10471F8D17C9003041FB /* PPEmotionalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPEmotionalCell.swift; sourceTree = "<group>"; };
+		7AEC96261F97AA7900E7C1ED /* PPEmotionalPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPEmotionalPackage.swift; sourceTree = "<group>"; };
+		7AEC96281F97B3CE00E7C1ED /* PPEmotionalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPEmotionalModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,11 +115,15 @@
 		17FCCCD11F7D27AD0044FBC5 /* EmotionKeyboard */ = {
 			isa = PBXGroup;
 			children = (
+				7A846FF71F8FAF4F0060BB4B /* Emoticons.bundle */,
 				17FCCCD21F7D27AD0044FBC5 /* AppDelegate.swift */,
 				17FCCCD41F7D27AD0044FBC5 /* ViewController.swift */,
 				17E0D9F91F7E9E8000540527 /* PPEmotionalKeyboardView.swift */,
 				7A8A10471F8D17C9003041FB /* PPEmotionalCell.swift */,
 				17E0D9F51F7E837600540527 /* PPEmotionalToolbar.swift */,
+				7A1AE5FF1F978D61006931DB /* PPEmotionalManager.swift */,
+				7AEC96261F97AA7900E7C1ED /* PPEmotionalPackage.swift */,
+				7AEC96281F97B3CE00E7C1ED /* PPEmotionalModel.swift */,
 				17E0D9F71F7E9B1400540527 /* PPCommonTool.swift */,
 				7A3801481F8BDB25008A6EAF /* UIColor+Extension.swift */,
 				17FCCCD61F7D27AD0044FBC5 /* Main.storyboard */,
@@ -249,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A20E22A1F97A17600164496 /* Emoticons.bundle in Resources */,
 				17FCCCDD1F7D27AD0044FBC5 /* LaunchScreen.storyboard in Resources */,
 				17FCCCDA1F7D27AD0044FBC5 /* Assets.xcassets in Resources */,
 				17FCCCD81F7D27AD0044FBC5 /* Main.storyboard in Resources */,
@@ -279,9 +292,12 @@
 				17E0D9F81F7E9B1400540527 /* PPCommonTool.swift in Sources */,
 				7A3801491F8BDB25008A6EAF /* UIColor+Extension.swift in Sources */,
 				17FCCCD51F7D27AD0044FBC5 /* ViewController.swift in Sources */,
+				7AEC96271F97AA7900E7C1ED /* PPEmotionalPackage.swift in Sources */,
+				7AEC96291F97B3CE00E7C1ED /* PPEmotionalModel.swift in Sources */,
 				17E0D9FA1F7E9E8000540527 /* PPEmotionalKeyboardView.swift in Sources */,
 				17FCCCD31F7D27AD0044FBC5 /* AppDelegate.swift in Sources */,
 				7A8A10481F8D17C9003041FB /* PPEmotionalCell.swift in Sources */,
+				7A1AE6001F978D61006931DB /* PPEmotionalManager.swift in Sources */,
 				17E0D9F61F7E837600540527 /* PPEmotionalToolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

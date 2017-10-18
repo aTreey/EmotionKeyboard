@@ -10,11 +10,16 @@ import UIKit
 
 class PPEmotionalKeyboardView: UIView {
 
+    var packages = PPEmotionalManager().packages
+    
     override init(frame: CGRect) {
         let rect = CGRect(x: 0, y: 0, width: 100, height: kPPEmotionalKeyboardView_Height)
         super.init(frame: rect)
         self.backgroundColor = UIColor.cyan
         setupUI()
+        
+        let packages = PPEmotionalManager().packages
+        print("packages = \(packages)")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,7 +87,7 @@ extension PPEmotionalKeyboardView : PPEmotionalToolbarDelegate {
 extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return packages.count
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
