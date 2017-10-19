@@ -90,13 +90,13 @@ extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionView
         return packages.count
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return packages[section].sectionArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell, for: indexPath) as! PPEmotionalCell
-        cell.indexPath = indexPath
-        cell.backgroundColor = UIColor.randomColor
+        cell.emotionalModelArray = packages[indexPath.section].sectionArray[indexPath.row]
+        cell.backgroundColor = UIColor.lightGray
         return cell
     }
     

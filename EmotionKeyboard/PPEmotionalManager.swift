@@ -44,7 +44,7 @@ class PPEmotionalManager: NSObject {
         // 数组中字典是[string : string]
         let packageArray = dict["emoticons"] as! [[String : String]]
         
-        let package = PPEmotionalPackage(name: emojName, packages: packageArray)
+        let package = PPEmotionalPackage(id: id, name: emojName, packages: packageArray)
         packages.append(package)
     }
 }

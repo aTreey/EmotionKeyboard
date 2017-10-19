@@ -18,3 +18,10 @@ let kPPEmotionalKeyboardView_BottomToobar_Height = 44
 
 let kPPEmotionalKeyboardView_emotionalCell = "EmotionalCell"
 
+let kEmeotional_count = 24
+let kEmeotional_row = 3
+let kEmeotional_column = 8
+
+let kEmeotionalButton_margin: CGFloat = 5
+
+

@@ -10,22 +10,33 @@ import UIKit
 
 class PPEmotionalModel: NSObject {
     
+    /// 表情包id
+    @objc var id: String?
+    
     /// 传给服务器时的表情文本
-    var chs: String?
+    @objc var chs: String?
     
     /// 十六进制码
-    var code: String?
+    @objc var code: String?
     
     /// 图片
-    var png: String?
+    @objc var png: String? {
+        didSet {
+            imagePath = Bundle.main.bundlePath + "/Emoticons.bundle/" + "\(id!)/" + "\(png ?? "")"
+        }
+//        return Bundle.main.bundlePath + "/Emoticons.bundle/" + "\(id!)/" + "\(png ?? "")"
+    }
+    
+    @objc var imagePath: String?
     
     /// git
-    var gif: String?
+    @objc var gif: String?
     
     /// 类型
-    var type: String?
+    @objc var type: String?
     
-    init(dict: [String: String]) {
+    init(id: String, dict: [String: String]) {
+        self.id = id
         super.init()
         setValuesForKeys(dict)
     }
