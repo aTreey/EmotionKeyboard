@@ -16,6 +16,8 @@ protocol PPEmotionalToolbarDelegate : NSObjectProtocol {
 
 @available(iOS 9.0, *)
 class PPEmotionalToolbar: UIStackView {
+    
+    var packages = [PPEmotionalPackage]()
     var buttons = [UIButton]()
     var selectedButton: UIButton?
     weak open var delegate: PPEmotionalToolbarDelegate?
@@ -53,9 +55,14 @@ class PPEmotionalToolbar: UIStackView {
     }
     
     private func addEmotional() {
-        let buttonInfo = [["title": "默认", "imageName": "button1"],
+        packages = PPEmotionalManager().packages
+        var buttonInfo = [["title": "默认", "imageName": "button1"],
                           ["title": "表情", "imageName": "button1"],
                           ["title": "下载", "imageName": "button1"]]
+        for (index, package) in packages.enumerated() {
+            buttonInfo[index].updateValue(package.emojiName!, forKey: "title")
+        }
+        
         
         for (index, info) in buttonInfo.enumerated() {
             let button = UIButton(type: .custom)

@@ -39,12 +39,19 @@ class PPEmotionalPackage: NSObject {
     
     // MARK: 处理 [PPEmotionalModel] 类型的数据
     private func parseSectionEmotionals(array: [PPEmotionalModel]) -> [[PPEmotionalModel]] {
-        let pageCount = array.count / kEmeotional_count
-        var  sectionArray = [[PPEmotionalModel]]()
+        var sectionArray = [[PPEmotionalModel]]()
+        
+        let page = Double(array.count) / Double(kEmeotional_count)
+        let pageCount = Int(ceil(page))
         
         for i in 0..<pageCount {
             let loc = i * kEmeotional_count
-            let length = kEmeotional_count
+            var length = kEmeotional_count
+            
+            if loc + length > array.count {
+                length = array.count - loc
+            }
+            
             let range = NSMakeRange(loc, length)
             let subArray = array as NSArray
             let tempArray = subArray.subarray(with: range)

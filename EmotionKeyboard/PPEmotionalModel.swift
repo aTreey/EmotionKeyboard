@@ -43,5 +43,9 @@ class PPEmotionalModel: NSObject {
     
     override func setValue(_ value: Any?, forUndefinedKey key: String) {    }
     
-    
+    override var description: String {
+        let keys = ["chs", "code", "code", "type"]
+        let dict = self.dictionaryWithValues(forKeys: keys)
+        return dict.description
+    }
 }

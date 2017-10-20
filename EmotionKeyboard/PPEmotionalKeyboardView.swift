@@ -96,7 +96,7 @@ extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell, for: indexPath) as! PPEmotionalCell
         cell.emotionalModelArray = packages[indexPath.section].sectionArray[indexPath.row]
-        cell.backgroundColor = UIColor.lightGray
+        cell.indexPath = indexPath
         return cell
     }
     
