@@ -20,9 +20,13 @@ class PPEmotionalCell: UICollectionViewCell {
     }
     
     
-    /// 每页对应的模型数组
+    //MARK: 处理模型,增加空model 和删除 model
     var emotionalModelArray: [PPEmotionalModel]? {
         didSet {
+            
+            for button in emojButtons {
+                button.isHidden = true
+            }
             for (index, emotional) in (emotionalModelArray?.enumerated())! {
                 let button = emojButtons[index]
                 button.isHidden = false
@@ -31,6 +35,9 @@ class PPEmotionalCell: UICollectionViewCell {
                 button.setImage(UIImage(contentsOfFile: emotional.imagePath ?? ""), for: .normal)
                 button.setTitle(emotional.code?.hexString2EmojString() ?? "", for: .normal)
                 button.setTitleColor(.blue, for: .normal)
+                if emotional.isDelete {
+                    button.setImage(UIImage(named: "compose_emotion_delete"), for: .normal)
+                }
             }
         }
     }
@@ -48,20 +55,19 @@ class PPEmotionalCell: UICollectionViewCell {
     
     private func setupUI() {
         
-        for i in 0..<kEmeotional_count {
+        for i in 0..<kEmotional_count {
             let button = UIButton(type: .custom)
             addSubview(button)
-            let row = i / kEmeotional_column
-            let column = i % kEmeotional_column
+            let row = i / kEmotional_column
+            let column = i % kEmotional_column
 
-            let width = (kScreen_Width - 2 * kEmeotionalButton_margin) / CGFloat(kEmeotional_column)
-            let height = (bounds.height - 2 * kEmeotionalButton_margin) / CGFloat(kEmeotional_row)
+            let width = (kScreen_Width - 2 * kEmotionalButton_margin) / CGFloat(kEmotional_column)
+            let height = (bounds.height - 2 * kEmotionalButton_margin) / CGFloat(kEmotional_row)
             
-            let x = kEmeotionalButton_margin + CGFloat(column) * width
-            let y = kEmeotionalButton_margin + CGFloat(row) * height
-            
+            let x = kEmotionalButton_margin + CGFloat(column) * width
+            let y = kEmotionalButton_margin + CGFloat(row) * height
             button.frame = CGRect(x: x, y: y, width: width, height: height)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 30)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 32)
             button.backgroundColor = UIColor.white
             button.addTarget(self, action: #selector(emojButtonAction), for: .touchUpInside)
             let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureRecoginzer))
@@ -74,13 +80,30 @@ class PPEmotionalCell: UICollectionViewCell {
         
     }
     
-    @objc private func longGestureRecoginzer() {
-        popView.show()
-        print("长按")
-
+    //MARK: 长按手势
+    @objc private func longGestureRecoginzer(gesture: UILongPressGestureRecognizer) {
+        let currentPoint = gesture.location(in: contentView)
+        var tempButton: UIButton?
+        for button in emojButtons {
+            if button.frame.contains(currentPoint) {
+                tempButton = button
+            }
+        }
+        guard let btn = tempButton else {
+            return
+        }
+        
+        if gesture.state == UIGestureRecognizerState.began ||
+           gesture.state == UIGestureRecognizerState.changed {
+            popView.show(fromButton: btn)
+        } else {
+            popView.isHidden = true
+        }
     }
     
-    @objc private func emojButtonAction() {
+
+    //MARK: 点击Emoj按钮
+    @objc private func emojButtonAction(button: UIButton) {
         print("选中")
     }
     

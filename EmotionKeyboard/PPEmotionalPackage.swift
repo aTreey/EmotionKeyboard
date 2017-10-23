@@ -20,9 +20,28 @@ class PPEmotionalPackage: NSObject {
         self.emojiName = name
         super.init()
         var tempArray = [PPEmotionalModel]()
+        var count = 0
         for item in packages {
+            count += 1
             let emoj = PPEmotionalModel(id: id, dict: item)
             tempArray.append(emoj)
+            if count == kEmotional_count - 1 {
+                count = 0
+                let deleteModel = PPEmotionalModel(isDelete: true)
+                tempArray.append(deleteModel)
+            }
+        }
+        
+        // 添加空模型
+        let residue = tempArray.count % kEmotional_count
+        if residue > 0 {
+            for _ in residue..<kEmotional_count - 1  {
+                let emptyModel = PPEmotionalModel(isEmpty: true)
+                tempArray.append(emptyModel)
+            }
+            
+            let deleteModel = PPEmotionalModel(isDelete: true)
+            tempArray.append(deleteModel)
         }
         sectionArray = parseSectionEmotionals(array: tempArray)
     }
@@ -41,12 +60,12 @@ class PPEmotionalPackage: NSObject {
     private func parseSectionEmotionals(array: [PPEmotionalModel]) -> [[PPEmotionalModel]] {
         var sectionArray = [[PPEmotionalModel]]()
         
-        let page = Double(array.count) / Double(kEmeotional_count)
+        let page = Double(array.count) / Double(kEmotional_count)
         let pageCount = Int(ceil(page))
         
         for i in 0..<pageCount {
-            let loc = i * kEmeotional_count
-            var length = kEmeotional_count
+            let loc = i * kEmotional_count
+            var length = kEmotional_count
             
             if loc + length > array.count {
                 length = array.count - loc

@@ -35,10 +35,24 @@ class PPEmotionalModel: NSObject {
     /// 类型
     @objc var type: String?
     
+    @objc var isDelete = false
+    
+    @objc var isEmpty = false
+    
     init(id: String, dict: [String: String]) {
         self.id = id
         super.init()
         setValuesForKeys(dict)
+    }
+    
+    init(isDelete: Bool) {
+        super.init()
+        self.isDelete = isDelete
+    }
+    
+    init(isEmpty: Bool) {
+        super.init()
+        self.isEmpty = isEmpty
     }
     
     override func setValue(_ value: Any?, forUndefinedKey key: String) {    }
