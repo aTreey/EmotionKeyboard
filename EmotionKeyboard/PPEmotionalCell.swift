@@ -16,6 +16,7 @@ class PPEmotionalCell: UICollectionViewCell {
     var indexPath: IndexPath! {
         didSet {
 //            label.text = "\(indexPath.section) -- \(indexPath.row)"
+//            label.sizeToFit()
         }
     }
     
@@ -34,7 +35,6 @@ class PPEmotionalCell: UICollectionViewCell {
 //                button.setImage(UIImage(named: emotional.imagePath ?? ""), for: .normal)
                 button.setImage(UIImage(contentsOfFile: emotional.imagePath ?? ""), for: .normal)
                 button.setTitle(emotional.code?.hexString2EmojString() ?? "", for: .normal)
-                button.setTitleColor(.blue, for: .normal)
                 if emotional.isDelete {
                     button.setImage(UIImage(named: "compose_emotion_delete"), for: .normal)
                 }
@@ -93,9 +93,12 @@ class PPEmotionalCell: UICollectionViewCell {
             return
         }
         
+        let index = emojButtons.index(of: btn)
+        let emojiModel = emotionalModelArray![index!]
+        
         if gesture.state == UIGestureRecognizerState.began ||
            gesture.state == UIGestureRecognizerState.changed {
-            popView.show(fromButton: btn)
+            popView.show(fromButton: btn, emotional: emojiModel)
         } else {
             popView.isHidden = true
         }

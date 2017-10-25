@@ -79,7 +79,7 @@ extension PPEmotionalKeyboardView : PPEmotionalToolbarDelegate {
 //      centeredHorizontally
 //      right:
         
-        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
+        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.left, animated: false)
     }
 }
 
@@ -95,7 +95,7 @@ extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell, for: indexPath) as! PPEmotionalCell
-        cell.emotionalModelArray = packages[indexPath.section].sectionArray[indexPath.row]
+        cell.emotionalModelArray = packages[indexPath.section].sectionArray[indexPath.item]
         cell.indexPath = indexPath
         return cell
     }

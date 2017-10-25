@@ -10,6 +10,8 @@ import UIKit
 
 class PPEmotionalPopView: UIView {
     
+    var emojImage: UIImage?
+    
     override init(frame: CGRect) {
         let rect = CGRect(x: 0, y: 0, width: kEmotionalPopView_width, height: kEmotionalPopView_height)
         super.init(frame: rect)
@@ -23,18 +25,25 @@ class PPEmotionalPopView: UIView {
     private func _setup() {
         addSubview(imageView)
         addSubview(button)
-        
     }
     
-    func show(fromButton button: UIButton!) {
+    func show(fromButton button: UIButton!, emotional: PPEmotionalModel) {
         
         // 键盘的window不是keyWindow，获取keyWindow添加popView 会有问题
+        
+        if emotional.isDelete || emotional.isEmpty {
+            return
+        }
+        
         let window = UIApplication.shared.windows.last
         window?.addSubview(self)
         self.isHidden = false
         let buttonRect = button.convert(button.bounds, to: window)
         center.x = buttonRect.midX;
         frame.origin.y = buttonRect.maxY - bounds.height
+
+        self.button.setImage(UIImage(contentsOfFile: emotional.imagePath ?? ""), for: .normal)
+        self.button.setTitle(emotional.code?.hexString2EmojString() ?? "", for: .normal)
         
         /**
          0.5 s之后取消popView
@@ -42,8 +51,8 @@ class PPEmotionalPopView: UIView {
          2. perform延迟执行某一个方法
          */
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            self.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) {
+//            self.isHidden = true
         }
         
 //        perform(#selector(hidden), with: nil, afterDelay: 0.5)
@@ -57,10 +66,9 @@ class PPEmotionalPopView: UIView {
     private lazy var imageView = UIImageView(image: UIImage(named: "emoticon_keyboard_magnifier"))
     private lazy var button: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
-        let width = self.imageView.bounds.width * 0.8
+        let width = self.imageView.bounds.width
         button.frame = CGRect(x: 0, y: 0, width: width, height: width)
-        button.setTitle("pop", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 32)
         return button
     }()
 }
