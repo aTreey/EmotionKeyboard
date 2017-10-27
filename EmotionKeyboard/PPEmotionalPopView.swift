@@ -30,7 +30,6 @@ class PPEmotionalPopView: UIView {
     func show(fromButton button: UIButton!, emotional: PPEmotionalModel) {
         
         // 键盘的window不是keyWindow，获取keyWindow添加popView 会有问题
-        
         if emotional.isDelete || emotional.isEmpty {
             return
         }
@@ -44,20 +43,22 @@ class PPEmotionalPopView: UIView {
 
         self.button.setImage(UIImage(contentsOfFile: emotional.imagePath ?? ""), for: .normal)
         self.button.setTitle(emotional.code?.hexString2EmojString() ?? "", for: .normal)
-        
-        /**
-         0.5 s之后取消popView
-         1. GCD 延迟执行
-         2. perform延迟执行某一个方法
-         */
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) {
-//            self.isHidden = true
-        }
-        
-//        perform(#selector(hidden), with: nil, afterDelay: 0.5)
     }
     
+    
+    /**
+     0.5 s之后取消popView
+     1. GCD 延迟执行
+     2. perform延迟执行某一个方法
+     */
+    // MARK: 取消popView
+    @objc func dismiss() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) {
+            self.isHidden = true
+        }
+        
+        //perform(#selector(hidden), with: nil, afterDelay: 0.5)
+    }
     
     @objc private func hidden() {
         isHidden = true

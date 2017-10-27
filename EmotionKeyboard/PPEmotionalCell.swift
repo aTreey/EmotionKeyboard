@@ -89,15 +89,16 @@ class PPEmotionalCell: UICollectionViewCell {
                 tempButton = button
             }
         }
-        guard let btn = tempButton else {
-            return
-        }
-        
-        let index = emojButtons.index(of: btn)
-        let emojiModel = emotionalModelArray![index!]
         
         if gesture.state == UIGestureRecognizerState.began ||
            gesture.state == UIGestureRecognizerState.changed {
+            guard let btn = tempButton else { return }
+            let index = emojButtons.index(of: btn)
+            let emojiModel = emotionalModelArray![index!]
+            if emojiModel.isEmpty || emojiModel.isDelete {
+                popView.isHidden = true
+                return
+            }
             popView.show(fromButton: btn, emotional: emojiModel)
         } else {
             popView.isHidden = true
@@ -107,7 +108,16 @@ class PPEmotionalCell: UICollectionViewCell {
 
     //MARK: 点击Emoj按钮
     @objc private func emojButtonAction(button: UIButton) {
-        print("选中")
+        let index = emojButtons.index(of: button)
+        let emojiModel = emotionalModelArray![index!]
+        if emojiModel.isEmpty || emojiModel.isDelete {
+            popView.isHidden = true
+            return
+        }
+        popView.show(fromButton: button, emotional: emojiModel)
+        popView.dismiss()
+        
+        
     }
     
     
