@@ -26,4 +26,5 @@ let kEmotionalButton_margin: CGFloat = 5
 let kEmotionalPopView_width = 64
 let kEmotionalPopView_height = 92
 
+let kEmotionalNotificationName = "EmotionalNotificationName"
 

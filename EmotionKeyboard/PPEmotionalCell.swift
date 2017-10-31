@@ -117,8 +117,11 @@ class PPEmotionalCell: UICollectionViewCell {
         popView.show(fromButton: button, emotional: emojiModel)
         popView.dismiss()
         
-        
+        // 发送通知
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kEmotionalNotificationName), object: emojiModel)
     }
+    
+    //MARK: 通知
     
     
     private func testLabel() {
