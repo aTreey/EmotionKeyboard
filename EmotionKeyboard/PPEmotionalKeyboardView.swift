@@ -13,9 +13,9 @@ class PPEmotionalKeyboardView: UIView {
     var packages = PPEmotionalManager().packages
     
     override init(frame: CGRect) {
-        let rect = CGRect(x: 0, y: 0, width: 100, height: kPPEmotionalKeyboardView_Height)
+        let rect = CGRect(x: 0, y: 0, width: 0, height: kPPEmotionalKeyboardView_Height)
         super.init(frame: rect)
-        self.backgroundColor = UIColor.cyan
+        self.backgroundColor = UIColor.yellow
         setupUI()
         
         let packages = PPEmotionalManager().packages
@@ -38,6 +38,7 @@ class PPEmotionalKeyboardView: UIView {
         
         
         addSubview(collectionView)
+        addSubview(pageControl)
         collectionView.register(PPEmotionalCell.self, forCellWithReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell)
     }
     
@@ -52,13 +53,22 @@ class PPEmotionalKeyboardView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: kScreen_Width, height: rect.height)
         let collectionView = UICollectionView(frame: rect, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.yellow
+        collectionView.backgroundColor = UIColor.lightText
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.isPagingEnabled = true
         return collectionView
     }()
-    @available(iOS 9.0, *)
+    
+    private lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl(frame: CGRect(x: 0, y: self.bounds.height  - 34 - bottomToobar.bounds.height - CGFloat(kPPEmotionalKeyboardView_Bottom_Height), width: kScreen_Width, height: 30))
+        pageControl.backgroundColor = UIColor.red
+        pageControl.currentPage = 1
+        pageControl.numberOfPages = 10
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor.blue
+        return pageControl
+    }()
     private lazy var bottomToobar: PPEmotionalToolbar = PPEmotionalToolbar()
 
 }

@@ -15,6 +15,8 @@ let kScreen_Height = UIScreen.main.bounds.height
 
 let kPPEmotionalKeyboardView_Height = 268
 let kPPEmotionalKeyboardView_BottomToobar_Height = 44
+let kPPEmotionalKeyboardView_Bottom_Height = 30
+
 
 let kPPEmotionalKeyboardView_emotionalCell = "EmotionalCell"
 

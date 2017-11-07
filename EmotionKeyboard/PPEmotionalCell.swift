@@ -45,7 +45,7 @@ class PPEmotionalCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.lightGray
+        backgroundColor = UIColor.blue
         setupUI()
     }
     
@@ -62,7 +62,7 @@ class PPEmotionalCell: UICollectionViewCell {
             let column = i % kEmotional_column
 
             let width = (kScreen_Width - 2 * kEmotionalButton_margin) / CGFloat(kEmotional_column)
-            let height = (bounds.height - 2 * kEmotionalButton_margin) / CGFloat(kEmotional_row)
+            let height = (bounds.height - 2 * kEmotionalButton_margin - CGFloat(kPPEmotionalKeyboardView_Bottom_Height)) / CGFloat(kEmotional_row)
             
             let x = kEmotionalButton_margin + CGFloat(column) * width
             let y = kEmotionalButton_margin + CGFloat(row) * height
@@ -112,7 +112,6 @@ class PPEmotionalCell: UICollectionViewCell {
         let emojiModel = emotionalModelArray![index!]
         if emojiModel.isEmpty || emojiModel.isDelete {
             popView.isHidden = true
-            return
         }
         popView.show(fromButton: button, emotional: emojiModel)
         popView.dismiss()
