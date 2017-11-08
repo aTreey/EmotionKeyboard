@@ -39,6 +39,11 @@ class PPEmotionalKeyboardView: UIView {
         
         addSubview(collectionView)
         addSubview(pageControl)
+        
+        let indexPath = NSIndexPath(index: 0)
+        pageControl.numberOfPages = packages[indexPath.section].sectionArray.count
+        pageControl.currentPage = 0
+        pageControl.updateCurrentPageDisplay()
         collectionView.register(PPEmotionalCell.self, forCellWithReuseIdentifier: kPPEmotionalKeyboardView_emotionalCell)
     }
     
@@ -61,12 +66,12 @@ class PPEmotionalKeyboardView: UIView {
     }()
     
     private lazy var pageControl: UIPageControl = {
-        let pageControl = UIPageControl(frame: CGRect(x: 0, y: self.bounds.height  - 34 - bottomToobar.bounds.height - CGFloat(kPPEmotionalKeyboardView_Bottom_Height), width: kScreen_Width, height: 30))
+        let pageControl = UIPageControl(frame: CGRect(x: 0, y: self.bounds.height  - 34 - bottomToobar.bounds.height - CGFloat(kPPEmotionalKeyboardView_Bottom_Height), width: 0, height: 30))
         pageControl.backgroundColor = UIColor.red
-        pageControl.currentPage = 1
-        pageControl.numberOfPages = 10
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.blue
+        pageControl.addTarget(self, action: #selector(pageControlValueChange), for: .valueChanged)
+//        pageControl.defersCurrentPageDisplay = true
         return pageControl
     }()
     private lazy var bottomToobar: PPEmotionalToolbar = PPEmotionalToolbar()
@@ -90,6 +95,10 @@ extension PPEmotionalKeyboardView : PPEmotionalToolbarDelegate {
 //      right:
         
         collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.left, animated: false)
+        
+        pageControl.numberOfPages = PPEmotionalManager().packages[indexPath.section].sectionArray.count
+        pageControl.currentPage = indexPath.item
+//        pageControl.updateCurrentPageDisplay()
     }
 }
 
@@ -115,6 +124,17 @@ extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionView
         let index = collectionView.indexPathsForVisibleItems.first!
 //        print("index = \(index)")
         bottomToobar.setSelected(index: index.section)
+        pageControl.numberOfPages = PPEmotionalManager().packages[index.section].sectionArray.count
+        pageControl.currentPage = index.item
+//        pageControl.updateCurrentPageDisplay()
+    }
+    
+    
+    @objc func pageControlValueChange() {
+        let indexPath = IndexPath(item: pageControl.currentPage, section: 0)
+        pageControl.updateCurrentPageDisplay()
+        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.left, animated: false)
+        print(pageControl.currentPage)
     }
     
     
