@@ -35,8 +35,49 @@ class ViewController: UIViewController {
     }
     
     
+    /// 转化含有表情图片的字符串
     @IBAction func composeAction(_ sender: Any) {
         
+        var attriString = NSMutableAttributedString(string: textView.text)
+        // 正则表达式匹配"\\[.*?\\]"
+        let emotianalRegx = try? NSRegularExpression(pattern: "\\[.*?\\]", options: [])
+        
+        let result = emotianalRegx?.matches(in: textView.text, options: [], range: NSRange(location: 0, length: (textView.text?.count)!))
+        
+        for item in (result?.reversed())! {
+            
+            let range = item.range(at: 0)
+            let subStr = (textView.text as NSString).substring(with: range)
+//            let subString = textView.text.substring(with: <#T##Range<String.Index>#>)
+            var emotion: PPEmotionalModel?
+            for emotionalPackage in PPEmotionalManager().packages {
+                for emotionals in emotionalPackage.sectionArray {
+                    let array = emotionals.filter({ (emoji) -> Bool in
+                        return emoji.chs == subStr
+                    })
+                    
+                    if !array.isEmpty {
+                        emotion = array.first
+                    }
+                    
+                    let image = UIImage(contentsOfFile: emotion?.imagePath ?? "")
+                    
+                    let attachment = NSTextAttachment()
+                    attachment.image = image
+                    attachment.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+                    
+                    let imageText = NSAttributedString(attachment: attachment)
+                    
+                    attriString.replaceCharacters(in: range, with: imageText)
+                }
+            }
+        }
+        
+        let enterChar = NSAttributedString(string: "\n\n")
+        
+        attriString.append(enterChar)
+        textView.attributedText = attriString.copy() as! NSAttributedString
+        print(attriString)
     }
     
     
@@ -60,6 +101,21 @@ class ViewController: UIViewController {
         textStr = mutableString
         print(mutableString)
         
+        
+        let result = NSMutableAttributedString()
+        
+        result.append(textView.attributedText)
+        result.append(NSAttributedString(string: "\n\n\n"))
+        result.append(NSAttributedString(string: textStr!))
+        
+        textView.attributedText = result.copy() as! NSAttributedString
+        
+        
+        
+        
+        
+        
+        
         /// 便利指定的富文本属性
         textView.attributedText.enumerateAttribute(NSAttributedStringKey.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: NSAttributedString.EnumerationOptions.longestEffectiveRangeNotRequired) { (any, range, error) in
             if any is NSTextAttachment {
@@ -68,6 +124,7 @@ class ViewController: UIViewController {
 //                print("2222正常文本")
             }
         }
+        
     }
     
     

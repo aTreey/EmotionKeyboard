@@ -65,12 +65,24 @@ class PPEmotionalKeyboardView: UIView {
         return collectionView
     }()
     
+//TODO: 点击pageControl 切换bug
+    @objc private func didSelectItem(control: UIPageControl, event: UIEvent) {
+        let touch = event.allTouches?.first
+        let point = touch?.location(in: pageControl)
+        let pageContorl_centerX = control.center.x
+        let left = pageContorl_centerX - 15.0 * CGFloat(pageControl.numberOfPages) / 2
+        let current_page = ((point?.x)! - left) / 15
+        pageControl.currentPage = Int(current_page)
+        
+        collectionView.setContentOffset(CGPoint(x: pageControl.currentPage * Int(kScreen_Width), y: 0), animated: false)
+    }
+    
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl(frame: CGRect(x: 0, y: self.bounds.height  - 34 - bottomToobar.bounds.height - CGFloat(kPPEmotionalKeyboardView_Bottom_Height), width: 0, height: 30))
         pageControl.backgroundColor = UIColor.red
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.blue
-        pageControl.addTarget(self, action: #selector(pageControlValueChange), for: .valueChanged)
+        pageControl.addTarget(self, action: #selector(didSelectItem(control:event:)), for: .touchUpInside)
 //        pageControl.defersCurrentPageDisplay = true
         return pageControl
     }()
@@ -129,21 +141,19 @@ extension PPEmotionalKeyboardView : UICollectionViewDataSource, UICollectionView
 //        pageControl.updateCurrentPageDisplay()
     }
     
-    
-    @objc func pageControlValueChange() {
-        let indexPath = IndexPath(item: pageControl.currentPage, section: 0)
-        pageControl.updateCurrentPageDisplay()
-        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.left, animated: false)
-        print(pageControl.currentPage)
-    }
-    
-    
-    
     /**
      动画结束时调用，必须是非人为拖拽的动画是
      */
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         let index = collectionView.indexPathsForVisibleItems
         print("scrollViewDidEndScrollingAnimation---indexs = \(index)")
+    }
+    
+    
+    @objc func pageControlValueChange() {
+        let indexPath = IndexPath(item: pageControl.currentPage, section: 0)
+        pageControl.updateCurrentPageDisplay()
+        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.left, animated: false)
+        print(pageControl.currentPage)
     }
 }
