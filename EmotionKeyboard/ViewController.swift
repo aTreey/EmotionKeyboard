@@ -38,48 +38,82 @@ class ViewController: UIViewController {
     /// 转化含有表情图片的字符串
     @IBAction func composeAction(_ sender: Any) {
         
+//        let pred = NSPredicate()
         var attriString = NSMutableAttributedString(string: textView.text)
         // 正则表达式匹配"\\[.*?\\]"
         let emotianalRegx = try? NSRegularExpression(pattern: "\\[.*?\\]", options: [])
         
+        
+//        typedef NS_OPTIONS(NSUInteger, NSRegularExpressionOptions) {
+//            NSRegularExpressionCaseInsensitive             = 1 << 0,     /*忽略大小写 */
+//            NSRegularExpressionAllowCommentsAndWhitespace  = 1 << 1,     /* 忽略空格 */
+//            NSRegularExpressionIgnoreMetacharacters        = 1 << 2,     /* Treat the entire pattern as a literal string. */
+//            NSRegularExpressionDotMatchesLineSeparators    = 1 << 3,     /* 允许 . 匹配任意字符，包括任何分隔符 */
+//            NSRegularExpressionAnchorsMatchLines           = 1 << 4,     /* 允许 ^ 和 $ . 匹配多行文本*/
+//            NSRegularExpressionUseUnixLineSeparators       = 1 << 5,     /* 使用\n 作为换行符 */
+//            NSRegularExpressionUseUnicodeWordBoundaries    = 1 << 6      /* 使用unicode 指定边界 */
+//        };
+        
+        ///1.  枚举每一个符合的结果，在闭包中回调
+//        emotianalRegx?.enumerateMatches(in: string, options: NSRegularExpressionCaseInsensitive, range: <#T##NSRange#>, using: { (result, <#NSRegularExpression.MatchingFlags#>, <#UnsafeMutablePointer<ObjCBool>#>) in
+//
+//        })
+        
+        /// 2. 返回第一符合的结果
+//        emotianalRegx?.firstMatch(in: <#T##String#>, options: <#T##NSRegularExpression.MatchingOptions#>, range: <#T##NSRange#>)
+        
+        /// 3. 返回第一个符合的range
+//        emotianalRegx?.rangeOfFirstMatch(in: <#T##String#>, options: <#T##NSRegularExpression.MatchingOptions#>, range: <#T##NSRange#>)
+        
+        ///4. 返回符合的集合
         let result = emotianalRegx?.matches(in: textView.text, options: [], range: NSRange(location: 0, length: (textView.text?.count)!))
         
         for item in (result?.reversed())! {
             
             let range = item.range(at: 0)
             let subStr = (textView.text as NSString).substring(with: range)
-//            let subString = textView.text.substring(with: <#T##Range<String.Index>#>)
-            var emotion: PPEmotionalModel?
-            for emotionalPackage in PPEmotionalManager().packages {
-                for emotionals in emotionalPackage.sectionArray {
-                    let array = emotionals.filter({ (emoji) -> Bool in
-                        return emoji.chs == subStr
-                    })
-                    
-                    if !array.isEmpty {
-                        emotion = array.first
-                    }
-                    
-                    let image = UIImage(contentsOfFile: emotion?.imagePath ?? "")
-                    
-                    let attachment = NSTextAttachment()
-                    attachment.image = image
-                    attachment.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-                    
-                    let imageText = NSAttributedString(attachment: attachment)
-                    
-                    attriString.replaceCharacters(in: range, with: imageText)
-                }
+            
+//            print("subStr = \(subStr)")
+            
+            if let emotional = matchEmotion(with: subStr) {
+                print("array = \(emotional)")
+                let attachment = emotionalText2emotionalIcon(enotional: emotional)
+                attriString.replaceCharacters(in: range, with: attachment)
             }
         }
         
-        let enterChar = NSAttributedString(string: "\n\n")
-        
-        attriString.append(enterChar)
         textView.attributedText = attriString.copy() as! NSAttributedString
         print(attriString)
     }
     
+    // 转换为带有图片附件的字符串
+    func emotionalText2emotionalIcon(enotional: PPEmotionalModel) -> NSAttributedString {
+        let attachment = NSTextAttachment()
+        let font = UIFont.systemFont(ofSize: 15)
+        let height = font.lineHeight
+        let width = font.lineHeight
+        attachment.image = UIImage(contentsOfFile:enotional.imagePath ?? "")
+        attachment.bounds = CGRect(x: 0, y: -5, width: width, height: height)        
+        return NSAttributedString(attachment: attachment)
+    }
+    
+    func matchEmotion(with emotionText: String) -> PPEmotionalModel? {
+        //获取分组
+        for package in PPEmotionalManager().packages {
+            // 获取表情数据
+            for emotions in package.sectionArray {
+                // 获取对应表情
+                let array = emotions.filter({ (emotion) -> Bool in
+                    return emotion.chs == emotionText
+                })
+                
+                if !array.isEmpty {
+                    return array.first
+                }
+            }
+        }
+        return nil
+    }
     
     @IBAction func emoji2textAction(_ sender: Any) {
         
@@ -109,12 +143,7 @@ class ViewController: UIViewController {
         result.append(NSAttributedString(string: textStr!))
         
         textView.attributedText = result.copy() as! NSAttributedString
-        
-        
-        
-        
-        
-        
+    
         
         /// 便利指定的富文本属性
         textView.attributedText.enumerateAttribute(NSAttributedStringKey.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: NSAttributedString.EnumerationOptions.longestEffectiveRangeNotRequired) { (any, range, error) in
