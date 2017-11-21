@@ -8,8 +8,16 @@
 
 import UIKit
 
+
+
 class ViewController: UIViewController {
 
+    // 表情正则表达式对象 "\\[.*?\\]"
+    static let emotianalRegx = try? NSRegularExpression(pattern: "\\[.*?\\]", options: [])
+    // 话题正则表达式对象
+    static let topicRegx = try? NSRegularExpression(pattern: "#.*?#", options: [])
+    //@某人正则表达式对象
+    static let atSomeOneRegex = try! NSRegularExpression(pattern: "@\\w+", options: [])
     
     @IBOutlet weak var textView: UITextView!
     
@@ -38,10 +46,7 @@ class ViewController: UIViewController {
     /// 转化含有表情图片的字符串
     @IBAction func composeAction(_ sender: Any) {
         
-//        let pred = NSPredicate()
-        var attriString = NSMutableAttributedString(string: textView.text)
-        // 正则表达式匹配"\\[.*?\\]"
-        let emotianalRegx = try? NSRegularExpression(pattern: "\\[.*?\\]", options: [])
+        let attriString = NSMutableAttributedString(string: textView.text)
         
         
 //        typedef NS_OPTIONS(NSUInteger, NSRegularExpressionOptions) {
@@ -66,7 +71,7 @@ class ViewController: UIViewController {
 //        emotianalRegx?.rangeOfFirstMatch(in: <#T##String#>, options: <#T##NSRegularExpression.MatchingOptions#>, range: <#T##NSRange#>)
         
         ///4. 返回符合的集合
-        let result = emotianalRegx?.matches(in: textView.text, options: [], range: NSRange(location: 0, length: (textView.text?.count)!))
+        let result = ViewController.emotianalRegx?.matches(in: textView.text, options: [], range: NSRange(location: 0, length: (textView.text?.count)!))
         
         for item in (result?.reversed())! {
             
@@ -77,7 +82,7 @@ class ViewController: UIViewController {
             
             if let emotional = matchEmotion(with: subStr) {
                 print("array = \(emotional)")
-                let attachment = emotionalText2emotionalIcon(enotional: emotional)
+                let attachment = PPTextAttachment.emotional2ImageText(emotional: emotional, font: textView.font!)
                 attriString.replaceCharacters(in: range, with: attachment)
             }
         }
@@ -86,16 +91,6 @@ class ViewController: UIViewController {
         print(attriString)
     }
     
-    // 转换为带有图片附件的字符串
-    func emotionalText2emotionalIcon(enotional: PPEmotionalModel) -> NSAttributedString {
-        let attachment = NSTextAttachment()
-        let font = UIFont.systemFont(ofSize: 15)
-        let height = font.lineHeight
-        let width = font.lineHeight
-        attachment.image = UIImage(contentsOfFile:enotional.imagePath ?? "")
-        attachment.bounds = CGRect(x: 0, y: -5, width: width, height: height)        
-        return NSAttributedString(attachment: attachment)
-    }
     
     func matchEmotion(with emotionText: String) -> PPEmotionalModel? {
         //获取分组
