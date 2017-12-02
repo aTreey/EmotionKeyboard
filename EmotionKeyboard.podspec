@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EmotionKeyboard"
-  s.version      = "0.0.1"
+  s.version      = "0.1.0"
   s.summary      = "A  Emotional Keyboard."
 
   # This description is used to generate tags and improve search results.
@@ -66,7 +66,7 @@ Swift Emotional Keyboard
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -92,7 +92,7 @@ Swift Emotional Keyboard
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "EmotionKeyboard", "EmotionKeyboard/Classes/**/*.{h,m}"
+  s.source_files  = "EmotionKeyboard", "EmotionKeyboardView/Classes/**/*"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -118,7 +118,7 @@ Swift Emotional Keyboard
   #  the lib prefix of their name.
   #
 
-  s.framework  = "UIKit"
+  # s.framework  = "UIKit"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
   # s.library   = "iconv"
