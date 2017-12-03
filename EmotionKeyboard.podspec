@@ -93,6 +93,11 @@ Swift Emotional Keyboard
   #
 
   s.source_files  = "EmotionKeyboard", "EmotionKeyboardView/Classes/**/*"
+
+  # s.resource_bundles = {
+  #  'EmotionKeyboard' => ['EmotionKeyboardView/Assets/*.png']
+  # }
+
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
