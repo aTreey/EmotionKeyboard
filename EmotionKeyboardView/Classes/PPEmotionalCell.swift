@@ -11,9 +11,16 @@ import UIKit
 
 class PPEmotionalCell: UICollectionViewCell {
     
-    lazy var emojButtons = [UIButton]()
+    lazy var emojButtons = [PPEmotionalButton]()
     
     var indexPath: IndexPath! {
+        
+        // oldValue
+        willSet {
+            
+        }
+        
+        // newValue
         didSet {
 //            label.text = "\(indexPath.section) -- \(indexPath.row)"
 //            label.sizeToFit()
@@ -31,13 +38,7 @@ class PPEmotionalCell: UICollectionViewCell {
             for (index, emotional) in (emotionalModelArray?.enumerated())! {
                 let button = emojButtons[index]
                 button.isHidden = false
-                // 使用contentOfFile 加载本地图片
-//                button.setImage(UIImage(named: emotional.imagePath ?? ""), for: .normal)
-                button.setImage(UIImage(contentsOfFile: emotional.imagePath ?? ""), for: .normal)
-                button.setTitle(emotional.code?.hexString2EmojString() ?? "", for: .normal)
-                if emotional.isDelete {
-                    button.setImage(UIImage(named: "compose_emotion_delete"), for: .normal)
-                }
+                button.emotionalModel = emotional
             }
         }
     }
@@ -56,7 +57,8 @@ class PPEmotionalCell: UICollectionViewCell {
     private func setupUI() {
         
         for i in 0..<kEmotional_count {
-            let button = UIButton(type: .custom)
+            let button = PPEmotionalButton()
+            button.delegate = self
             addSubview(button)
             let row = i / kEmotional_column
             let column = i % kEmotional_column
@@ -67,60 +69,9 @@ class PPEmotionalCell: UICollectionViewCell {
             let x = kEmotionalButton_margin + CGFloat(column) * width
             let y = kEmotionalButton_margin + CGFloat(row) * height
             button.frame = CGRect(x: x, y: y, width: width, height: height)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 32)
-            button.backgroundColor = UIColor.white
-            button.addTarget(self, action: #selector(emojButtonAction), for: .touchUpInside)
-            let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureRecoginzer))
-            button.addGestureRecognizer(longGesture)
-            
             emojButtons.append(button)
         }
-        
-//        testLabel()
-        
     }
-    
-    //MARK: 长按手势
-    @objc private func longGestureRecoginzer(gesture: UILongPressGestureRecognizer) {
-        let currentPoint = gesture.location(in: contentView)
-        var tempButton: UIButton?
-        for button in emojButtons {
-            if button.frame.contains(currentPoint) {
-                tempButton = button
-            }
-        }
-        
-        if gesture.state == UIGestureRecognizerState.began ||
-           gesture.state == UIGestureRecognizerState.changed {
-            guard let btn = tempButton else { return }
-            let index = emojButtons.index(of: btn)
-            let emojiModel = emotionalModelArray![index!]
-            if emojiModel.isEmpty || emojiModel.isDelete {
-                popView.isHidden = true
-                return
-            }
-            popView.show(fromButton: btn, emotional: emojiModel)
-        } else {
-            popView.isHidden = true
-        }
-    }
-    
-
-    //MARK: 点击Emoj按钮
-    @objc private func emojButtonAction(button: UIButton) {
-        let index = emojButtons.index(of: button)
-        let emojiModel = emotionalModelArray![index!]
-        if emojiModel.isEmpty || emojiModel.isDelete {
-            popView.isHidden = true
-        }
-        popView.show(fromButton: button, emotional: emojiModel)
-        popView.dismiss()
-        
-        // 发送通知
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kEmotionalNotificationName), object: emojiModel)
-    }
-    
-    //MARK: 通知
     
     
     private func testLabel() {
@@ -139,3 +90,50 @@ class PPEmotionalCell: UICollectionViewCell {
         return label
     }()
 }
+
+
+//MARK: 键盘中表情按钮点击和长安
+extension PPEmotionalCell: PPEmotionalButtonDelegate {
+    
+    func longGestureRecoginzer(button: PPEmotionalButton, longGesture: UILongPressGestureRecognizer) {
+        let currentPoint = longGesture.location(in: contentView)
+        var tempButton: PPEmotionalButton?
+        for button in emojButtons {
+            if button.frame.contains(currentPoint) {
+                tempButton = button
+            }
+        }
+        
+        if longGesture.state == UIGestureRecognizerState.began ||
+            longGesture.state == UIGestureRecognizerState.changed {
+            guard let btn = tempButton else { return }
+            let index = emojButtons.index(of: btn)
+            let emojiModel = emotionalModelArray![index!]
+            if emojiModel.isEmpty || emojiModel.isDelete {
+                popView.isHidden = true
+                return
+            }
+            popView.show(fromButton: btn, emotional: emojiModel)
+        }
+    }
+    
+    
+    func emojButtonAction(button: PPEmotionalButton) {
+        let index = emojButtons.index(of: button)
+        let emojiModel = emotionalModelArray![index!]
+        if emojiModel.isEmpty || emojiModel.isDelete {
+            popView.isHidden = true
+        }
+        popView.show(fromButton: button, emotional: emojiModel)
+        popView.dismiss()
+
+        // 发送通知
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kEmotionalNotificationName), object: emojiModel)
+    }
+}
+
+
+
+
+
+

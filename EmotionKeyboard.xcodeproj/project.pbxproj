@@ -26,6 +26,7 @@
 		7AAF0DE91FD295C00078F417 /* PPEmotionalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF0DDD1FD295BF0078F417 /* PPEmotionalModel.swift */; };
 		7AAF0DEA1FD295C00078F417 /* PPEmotionalKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF0DDE1FD295BF0078F417 /* PPEmotionalKeyboardView.swift */; };
 		7AAF0DEB1FD295C00078F417 /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF0DE01FD295BF0078F417 /* Emoticons.bundle */; };
+		7AE178C91FE965E7008AC284 /* PPEmotionalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE178C81FE965E7008AC284 /* PPEmotionalButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		7AAF0DDD1FD295BF0078F417 /* PPEmotionalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPEmotionalModel.swift; sourceTree = "<group>"; };
 		7AAF0DDE1FD295BF0078F417 /* PPEmotionalKeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPEmotionalKeyboardView.swift; sourceTree = "<group>"; };
 		7AAF0DE01FD295BF0078F417 /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
+		7AE178C81FE965E7008AC284 /* PPEmotionalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPEmotionalButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 				7AAF0DD61FD295BF0078F417 /* PPCommonTool.swift */,
 				7AAF0DD71FD295BF0078F417 /* String+Extension.swift */,
 				7AAF0DD81FD295BF0078F417 /* PPEmotionalCell.swift */,
+				7AE178C81FE965E7008AC284 /* PPEmotionalButton.swift */,
 				7AAF0DD91FD295BF0078F417 /* PPEmotionalToolbar.swift */,
 				7AAF0DDA1FD295BF0078F417 /* PPEmotionalManager.swift */,
 				7AAF0DDB1FD295BF0078F417 /* PPTextAttachment.swift */,
@@ -332,6 +335,7 @@
 				7AAF0DE61FD295C00078F417 /* PPEmotionalManager.swift in Sources */,
 				7A3801491F8BDB25008A6EAF /* UIColor+Extension.swift in Sources */,
 				17FCCCD51F7D27AD0044FBC5 /* ViewController.swift in Sources */,
+				7AE178C91FE965E7008AC284 /* PPEmotionalButton.swift in Sources */,
 				17FCCCD31F7D27AD0044FBC5 /* AppDelegate.swift in Sources */,
 				7AAF0DE31FD295BF0078F417 /* String+Extension.swift in Sources */,
 				7AAF0DE41FD295C00078F417 /* PPEmotionalCell.swift in Sources */,
