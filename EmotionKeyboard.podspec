@@ -106,7 +106,7 @@ Swift Emotional Keyboard
   #  non-essential files like tests, examples and documentation.
   #
 
-  # s.resource  = "icon.png"
+s.resource  = "EmotionKeyboardView/Assets/Emoticons.bundle"
   # s.resources = "Resources/*.png"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
